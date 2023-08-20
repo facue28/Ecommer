@@ -1,5 +1,5 @@
 import productosDisponibles from '../data/bbdd.js'
-import { productFilter,  buttonResta, buttonSuma,addEventbuttonCompra } from './functions.js';
+import { productFilter,  buttonResta, buttonSuma,addEventbuttonCompra,renderCarrito } from './functions.js';
 
 
 
@@ -25,7 +25,13 @@ document.addEventListener("DOMContentLoaded", () => {
         contenedor.appendChild(div)
     });
     productFilter()
-    addEventbuttonCompra()
+    document.addEventListener("click",(event) => {
+        const buttonId = event.target.getAttribute("id");
+        if (buttonId == "verCarrito"){
+            renderCarrito()
+        }
+    
+    })
     
 })
 

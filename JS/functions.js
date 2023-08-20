@@ -69,12 +69,21 @@ const productFilter = () => {
                     `
                 contenedor.appendChild(div)
             });
+            addEventbuttonCompra()
         })
     })
 }
 
 
 /// Function renderCarrito 
+// document.addEventListener("click",(event) => {
+//     const buttonId = event.target.getAttribute("id");
+//     if (buttonId == "verCarrito"){
+//         renderCarrito()
+//     }
+
+// })
+
 const renderCarrito = () => {
     tableCarrito.innerHTML = "";
     JSON.parse(localStorage.carrito).forEach(producto => {
