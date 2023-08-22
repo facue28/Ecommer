@@ -2,7 +2,7 @@ import productosDisponibles from '../data/bbdd.js'
 let carrito = [1]
 // Seleccion de nodos
 const contenedor = document.querySelector("#container-productos");
-const buttonCompra = document.querySelectorAll(".buttonCompra");
+//const buttonCompra = document.querySelectorAll(".buttonCompra");
 const buttonFilter = document.querySelectorAll(".buttonFilter");
 const tableCarrito = document.querySelector("#carritoRow");
 const buttonsResta = document.querySelectorAll(".buttonResta");
@@ -75,17 +75,11 @@ const productFilter = () => {
 }
 
 
-/// Function renderCarrito 
-// document.addEventListener("click",(event) => {
-//     const buttonId = event.target.getAttribute("id");
-//     if (buttonId == "verCarrito"){
-//         renderCarrito()
-//     }
-
-// })
 
 const renderCarrito = () => {
     tableCarrito.innerHTML = "";
+    let total = 0;
+
     JSON.parse(localStorage.carrito).forEach(producto => {
         const tr = document.createElement("tr");
         tr.innerHTML = `
@@ -93,24 +87,34 @@ const renderCarrito = () => {
                         <td>${producto.nombre}</td>
                         <td>$ ${producto.precio}</td>
                         <td>
-                            <button type="button" class="btn btn-primary btn-sm buttonResta" id=${producto.id}> - </button>
-                                <span id=${producto.id} class='cantidad-span'>${producto.cantidad}</span>
-                            <button type="button" class="btn btn-primary btn-sm buttonSuma" id=${producto.id}> + </button>
+                        <button type="button" class="btn btn-primary btn-sm buttonResta" id=${producto.id}> - </button>
+                        <span id=${producto.id} class='cantidad-span'>${producto.cantidad}</span>
+                        <button type="button" class="btn btn-primary btn-sm buttonSuma" id=${producto.id}> + </button>
+
                         </td>
                         <td>$ ${producto.cantidad * producto.precio}</td>
                     `
         tableCarrito.appendChild(tr);
+        total += producto.cantidad * producto.precio;
     });
+    const trTotal = document.createElement("tr");
+        trTotal.innerHTML = `<td colspan="4">Total</td><td>$ ${total}</td>`;
+        tableCarrito.appendChild(trTotal);
+        buttonResta();
+        buttonSuma();
 }
 
 
-/// Function buttonResta 
+
+/// Prueba const buttonResta
+
 const buttonResta = () => {
+    const buttonsResta = document.querySelectorAll('.buttonResta');
     buttonsResta.forEach((button) => {
         button.addEventListener("click", (event) => {
             const buttonId = parseInt(event.target.getAttribute("id"));
-            const carrito = JSON.parse(localStorage.carrito)
-            carrito.map(element => {
+            let carrito = JSON.parse(localStorage.carrito)
+            carrito = carrito.filter(element => {
                 if (element.id === buttonId) {
                     element.cantidad--
                     cantidadSpan.forEach(span => {
@@ -119,9 +123,13 @@ const buttonResta = () => {
                             span.innerText = element.cantidad
                         }
                     })
-                } return element
+                    return element.cantidad > 0;
+                } else {
+                    return true;
+                }
             })
             localStorage.setItem("carrito", JSON.stringify(carrito));
+            renderCarrito();
         });
     })
 }
@@ -129,7 +137,8 @@ const buttonResta = () => {
 
 /// Function buttonSuma
 const buttonSuma = () => {
-    buttonsSuma.forEach((button) => {
+    const buttonSuma = document.querySelectorAll('.buttonSuma');
+    buttonSuma.forEach((button) => {
         button.addEventListener("click", (event) => {
             const buttonId = parseInt(event.target.getAttribute("id"));
             const carrito = JSON.parse(localStorage.carrito)
@@ -145,11 +154,18 @@ const buttonSuma = () => {
                 } return element
             })
             localStorage.setItem("carrito", JSON.stringify(carrito));
+            renderCarrito();
         });
     })
 }
 
 
+const logOut = () => {
+    localStorage.removeItem("usuario")
+    localStorage.removeItem("carrito")
+    window.location = '../index.html'
+}
 
 
-export {addEventbuttonCompra, renderCarrito, buttonResta, buttonSuma, productFilter }
+
+export {addEventbuttonCompra, renderCarrito, productFilter, buttonResta,buttonSuma, logOut }

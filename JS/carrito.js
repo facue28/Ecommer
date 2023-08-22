@@ -1,8 +1,8 @@
-import productosDisponibles from '../data/bbdd.js'  
-import { renderCarrito, buttonResta, buttonSuma } from './functions.js';
-document.addEventListener("DOMContentLoaded", () => {
+// import productosDisponibles from '../data/bbdd.js'  
+// import { renderCarrito, buttonResta, buttonSuma } from './functions.js';
+// document.addEventListener("DOMContentLoaded", () => {
 
-        if (localStorage.carrito){
-            renderCarrito();
-        }
-    });
+//         if (localStorage.carrito){
+//             renderCarrito();
+//         }
+//     });
