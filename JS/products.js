@@ -1,10 +1,11 @@
-import productosDisponibles from '../data/bbdd.js'
+//import productosDisponibles from '../data/bbdd.js'
 import { productFilter,renderCarrito, buttonResta, buttonSuma, addEventbuttonCompra,  logOut } from './functions.js';
+import fetchProducts from './fetchProducts.js';
 
 
 
-
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
+    const productosDisponibles = await fetchProducts();
     //Seleccion de Nodos
     const contenedor = document.querySelector("#container-productos");
     const logOutButton = document.querySelector("#logOut");
@@ -24,8 +25,8 @@ document.addEventListener("DOMContentLoaded", () => {
             `
         contenedor.appendChild(div)
     });
-    addEventbuttonCompra()
-    productFilter()
+    addEventbuttonCompra(productosDisponibles)
+    productFilter(productosDisponibles)
     document.addEventListener("click",(event) => {
         const buttonId = event.target.getAttribute("id");
         if (buttonId == "verCarrito"){

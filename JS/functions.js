@@ -1,4 +1,7 @@
-import productosDisponibles from '../data/bbdd.js'
+//import productosDisponibles from '../data/bbdd.js'
+//import fetchProducts from './fetchProducts.js';
+
+
 let carrito = []
 // Seleccion de nodos
 const contenedor = document.querySelector("#container-productos");
@@ -6,7 +9,7 @@ const buttonFilter = document.querySelectorAll(".buttonFilter");
 const cantidadSpan = document.querySelectorAll(".cantidad-span")
 
 /// Function Add Event buttonCompra
-const addEventbuttonCompra = () => {
+const addEventbuttonCompra = (productosDisponibles)  => {
     const buttonCompra = document.querySelectorAll(".buttonCompra");
     buttonCompra.forEach((button) => {
         button.addEventListener("click", (event) => {
@@ -36,9 +39,9 @@ const addEventbuttonCompra = () => {
 }
 
 
-
 /// Function productFilter 
-const productFilter = () => {
+
+const productFilter = (productosDisponibles) => {
     buttonFilter.forEach((button) => {
         button.addEventListener("click", (event) => {
             const catProduct = event.target.getAttribute("id");
@@ -69,12 +72,12 @@ const productFilter = () => {
                     `
                 contenedor.appendChild(div)
             });
-            addEventbuttonCompra()
+            addEventbuttonCompra(productosDisponibles)
         })
     })
 }
 
-
+let total = 0;
 //Renderizar carrito
 const renderCarrito = () => {
     const carritoContainer = document.getElementById("carrito-container");
@@ -95,8 +98,8 @@ const renderCarrito = () => {
 
     const tbody = document.createElement("tbody");
     tbody.id = "carritoRow";
-
-    let total = 0;
+    total = 0
+    
 
     JSON.parse(localStorage.carrito).forEach(producto => {
         const tr = document.createElement("tr");
