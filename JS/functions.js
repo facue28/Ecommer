@@ -13,6 +13,20 @@ const addEventbuttonCompra = (productosDisponibles)  => {
     const buttonCompra = document.querySelectorAll(".buttonCompra");
     buttonCompra.forEach((button) => {
         button.addEventListener("click", (event) => {
+            //Toastify
+            Toastify({
+                text: "Producto agregado!",
+                duration: 3000,
+                newWindow: true,
+                close: true,
+                gravity: "top", 
+                position: "right", 
+                stopOnFocus: true, 
+                style: {
+                    background: "linear-gradient(to right, #00b09b, #96c93d)",
+                },
+                onClick: function(){} 
+            }).showToast();
             const productId = parseInt(event.target.getAttribute("id"));
             const productFind = productosDisponibles.find((producto) => producto.id === productId);
             if (productFind) {
@@ -137,6 +151,20 @@ const buttonResta = () => {
     const buttonsResta = document.querySelectorAll('.buttonResta');
     buttonsResta.forEach((button) => {
         button.addEventListener("click", (event) => {
+            //Toastify
+            Toastify({
+                text: "Producto eliminado",
+                duration: 3000,
+                newWindow: true,
+                close: true,
+                gravity: "top", 
+                position: "right", 
+                stopOnFocus: true, 
+                style: {
+                    background: "linear-gradient(to right, #Ec0a0a, #Ea4a4a)",
+                },
+                onClick: function(){} 
+            }).showToast();
             const buttonId = parseInt(event.target.getAttribute("id"));
             let carrito = JSON.parse(localStorage.carrito)
             carrito = carrito.filter(element => {
@@ -165,6 +193,20 @@ const buttonSuma = () => {
     const buttonSuma = document.querySelectorAll('.buttonSuma');
     buttonSuma.forEach((button) => {
         button.addEventListener("click", (event) => {
+            //Toastify
+            Toastify({
+                text: "Producto agregado!",
+                duration: 3000,
+                newWindow: true,
+                close: true,
+                gravity: "top", 
+                position: "right", 
+                stopOnFocus: true, 
+                style: {
+                    background: "linear-gradient(to right, #00b09b, #96c93d)",
+                },
+                onClick: function(){} 
+            }).showToast();
             const buttonId = parseInt(event.target.getAttribute("id"));
             const carrito = JSON.parse(localStorage.carrito)
             carrito.map(element => {
