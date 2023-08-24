@@ -1,5 +1,5 @@
 import productosDisponibles from '../data/bbdd.js'
-import { productFilter,renderCarrito, buttonResta, buttonSuma, addEventbuttonCompra, logOut } from './functions.js';
+import { productFilter,renderCarrito, buttonResta, buttonSuma, addEventbuttonCompra,  logOut } from './functions.js';
 
 
 

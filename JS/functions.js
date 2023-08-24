@@ -1,13 +1,9 @@
 import productosDisponibles from '../data/bbdd.js'
-let carrito = [1]
+let carrito = []
 // Seleccion de nodos
 const contenedor = document.querySelector("#container-productos");
-//const buttonCompra = document.querySelectorAll(".buttonCompra");
 const buttonFilter = document.querySelectorAll(".buttonFilter");
-const tableCarrito = document.querySelector("#carritoRow");
-const buttonsResta = document.querySelectorAll(".buttonResta");
 const cantidadSpan = document.querySelectorAll(".cantidad-span")
-const buttonsSuma = document.querySelectorAll(".buttonSuma");
 
 /// Function Add Event buttonCompra
 const addEventbuttonCompra = () => {
@@ -52,8 +48,12 @@ const productFilter = () => {
             } else {
                 catFind = productosDisponibles.filter((producto) => producto.categoria === catProduct);
             }
+
             ///Limpiar contenedor
+            const carritoContainer = document.getElementById("carrito-container");
+            carritoContainer.innerHTML = "";
             contenedor.innerHTML = ``;
+
             catFind.forEach((producto) => {
                 const div = document.createElement("div");
                 div.classList.add("card", "m-3")
@@ -75,9 +75,27 @@ const productFilter = () => {
 }
 
 
-
+//Renderizar carrito
 const renderCarrito = () => {
-    tableCarrito.innerHTML = "";
+    const carritoContainer = document.getElementById("carrito-container");
+    carritoContainer.innerHTML = "";
+    const table = document.createElement("table");
+    table.className = "table";
+
+    const thead = document.createElement("thead");
+    const trHeader = document.createElement("tr");
+    trHeader.innerHTML = `
+        <th scope="col">ID</th>
+        <th scope="col">Producto</th>
+        <th scope="col">Precio</th>
+        <th scope="col">Cantidad</th>
+        <th scope="col">Sub Total</th>
+    `;
+    thead.appendChild(trHeader);
+
+    const tbody = document.createElement("tbody");
+    tbody.id = "carritoRow";
+
     let total = 0;
 
     JSON.parse(localStorage.carrito).forEach(producto => {
@@ -90,24 +108,28 @@ const renderCarrito = () => {
                         <button type="button" class="btn btn-primary btn-sm buttonResta" id=${producto.id}> - </button>
                         <span id=${producto.id} class='cantidad-span'>${producto.cantidad}</span>
                         <button type="button" class="btn btn-primary btn-sm buttonSuma" id=${producto.id}> + </button>
-
                         </td>
                         <td>$ ${producto.cantidad * producto.precio}</td>
                     `
-        tableCarrito.appendChild(tr);
+        tbody.appendChild(tr);
         total += producto.cantidad * producto.precio;
     });
+
     const trTotal = document.createElement("tr");
-        trTotal.innerHTML = `<td colspan="4">Total</td><td>$ ${total}</td>`;
-        tableCarrito.appendChild(trTotal);
-        buttonResta();
-        buttonSuma();
+    trTotal.innerHTML = `<td colspan="4">Total</td><td>$ ${total}</td>`;
+
+    tbody.appendChild(trTotal);
+    table.appendChild(thead);
+    table.appendChild(tbody);
+    carritoContainer.appendChild(table);
+
+    buttonResta();
+    buttonSuma();
 }
 
 
 
 /// Prueba const buttonResta
-
 const buttonResta = () => {
     const buttonsResta = document.querySelectorAll('.buttonResta');
     buttonsResta.forEach((button) => {
@@ -167,5 +189,9 @@ const logOut = () => {
 }
 
 
+//Function Pagar
+const buttonPagar = document.querySelectorAll(".buttonPagar")
 
-export {addEventbuttonCompra, renderCarrito, productFilter, buttonResta,buttonSuma, logOut }
+
+
+export { addEventbuttonCompra, renderCarrito, productFilter, buttonResta, buttonSuma, logOut }
