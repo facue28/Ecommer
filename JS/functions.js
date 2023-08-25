@@ -274,8 +274,24 @@ const addEventbuttonPagar = () => {
 
     const trTotal = document.createElement("tr");
     trTotal.innerHTML = `<td colspan="4">Total</td><td>$ ${total}</td>`;
-
     tbody.appendChild(trTotal);
+
+    const confirmButton = document.createElement("button");
+    confirmButton.classList = "btn btn-primary success "
+    confirmButton.innerHTML = "Confirmar Pedido";
+    confirmButton.addEventListener("click", () =>{
+        confirmButton.innerHTML = "Gracias por su compra"
+        confirmButton.disabled = true
+    })
+
+    const trPedido = document.createElement("tr");
+    const tdPedido = document.createElement("td");
+    trPedido.colSpan = "5";
+    tdPedido.appendChild(confirmButton);
+    trPedido.appendChild(tdPedido);
+    tbody.appendChild(trPedido);
+
+
     table.appendChild(thead);
     table.appendChild(tbody);
     ordenContainer.appendChild(table);
