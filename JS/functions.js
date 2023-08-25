@@ -1,12 +1,12 @@
-//import productosDisponibles from '../data/bbdd.js'
-//import fetchProducts from './fetchProducts.js';
 
 
-let carrito = []
 // Seleccion de nodos
 const contenedor = document.querySelector("#container-productos");
 const buttonFilter = document.querySelectorAll(".buttonFilter");
 const cantidadSpan = document.querySelectorAll(".cantidad-span")
+const carritoContainer = document.getElementById("carrito-container");
+const buttonPagar = document.querySelector('.buttonPagar');
+const ordenContainer = document.getElementById("orden-container");
 
 /// Function Add Event buttonCompra
 const addEventbuttonCompra = (productosDisponibles)  => {
@@ -54,7 +54,6 @@ const addEventbuttonCompra = (productosDisponibles)  => {
 
 
 /// Function productFilter 
-
 const productFilter = (productosDisponibles) => {
     buttonFilter.forEach((button) => {
         button.addEventListener("click", (event) => {
@@ -94,8 +93,8 @@ const productFilter = (productosDisponibles) => {
 let total = 0;
 //Renderizar carrito
 const renderCarrito = () => {
-    const carritoContainer = document.getElementById("carrito-container");
     carritoContainer.innerHTML = "";
+    ordenContainer.innerHTML = "";
     const table = document.createElement("table");
     table.className = "table";
 
@@ -235,8 +234,54 @@ const logOut = () => {
 
 
 //Function Pagar
-const buttonPagar = document.querySelectorAll(".buttonPagar")
+const addEventbuttonPagar = () => {
+    buttonPagar.addEventListener('click',() => {
+    carritoContainer.innerHTML = "";
+    ordenContainer.innerHTML = "";
+    const table = document.createElement("table");
+    table.className = "table";
+
+    const thead = document.createElement("thead");
+    const trHeader = document.createElement("tr");
+    trHeader.innerHTML = `
+        <th scope="col">ID</th>
+        <th scope="col">Producto</th>
+        <th scope="col">Precio</th>
+        <th scope="col">Cantidad</th>
+        <th scope="col">Sub Total</th>
+    `;
+    thead.appendChild(trHeader);
+
+    const tbody = document.createElement("tbody");
+    tbody.id = "ordenRow";
+    total = 0
+    
+
+    JSON.parse(localStorage.carrito).forEach(producto => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+                        <th id=${producto.id} scope="row">${producto.id}</th>
+                        <td>${producto.nombre}</td>
+                        <td>$ ${producto.precio}</td>
+                        <td>
+                        <span id=${producto.id} class='cantidad-span'>${producto.cantidad}</span>
+                        </td>
+                        <td>$ ${producto.cantidad * producto.precio}</td>
+                    `
+        tbody.appendChild(tr);
+        total += producto.cantidad * producto.precio;
+    });
+
+    const trTotal = document.createElement("tr");
+    trTotal.innerHTML = `<td colspan="4">Total</td><td>$ ${total}</td>`;
+
+    tbody.appendChild(trTotal);
+    table.appendChild(thead);
+    table.appendChild(tbody);
+    ordenContainer.appendChild(table);
+    });
+}
 
 
 
-export { addEventbuttonCompra, renderCarrito, productFilter, buttonResta, buttonSuma, logOut }
+export { addEventbuttonCompra, renderCarrito, productFilter, buttonResta, buttonSuma, addEventbuttonPagar ,logOut }

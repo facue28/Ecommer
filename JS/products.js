@@ -1,5 +1,5 @@
-//import productosDisponibles from '../data/bbdd.js'
-import { productFilter,renderCarrito, buttonResta, buttonSuma, addEventbuttonCompra,  logOut } from './functions.js';
+
+import { productFilter,renderCarrito, buttonResta, buttonSuma, addEventbuttonCompra, addEventbuttonPagar,  logOut } from './functions.js';
 import fetchProducts from './fetchProducts.js';
 
 
@@ -34,6 +34,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             renderCarrito();
             buttonResta();
             buttonSuma();
+            addEventbuttonPagar();
         }
     })
     logOutButton.addEventListener("click",() =>{
