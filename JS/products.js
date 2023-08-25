@@ -18,8 +18,8 @@ document.addEventListener("DOMContentLoaded", async () => {
             `
             <img src=${producto.imagen} class="card-img-top" alt="...">
             <div class="card-body" id = ${producto.id}>
-                <h5 class="card-title">${producto.nombre}</h5>
-                <p class="card-text">Precio: ${producto.precio}.</p>
+                <h5 class="card-title"> ${producto.nombre}</h5>
+                <p class="card-text">Precio: $${producto.precio}.</p>
                 <a href="#" class="btn btn-primary buttonCompra" id = ${producto.id}>Agregar al carrito</a>
             </div>
             `
